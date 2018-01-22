@@ -30,6 +30,7 @@ router.post('/login', (req,res)=>{
 router.use(jwtAuth)
 
 router.post('/ping', (req, res)=>{
+  // req.decoded.id === session////////////////////////////******************
   console.log(req.decoded);
   res.json('pong')
 })
