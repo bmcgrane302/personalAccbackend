@@ -3,7 +3,7 @@ exports.up = function(knex, Promise) {
     table.increments();
     table.string('expense_description').notNullable();
     table.decimal('expenses_budget').notNullable();
-    table.decimal(' expenses_amount_paid').defaultTo(0);
+    table.decimal('expenses_amount_paid').defaultTo(0);
     table.integer('users_id')
       .references("id")
       .inTable("users")

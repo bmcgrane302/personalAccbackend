@@ -4,12 +4,7 @@ var knex = require('../db/knex');
 var jwt = require('jsonwebtoken');
 const jwtSecret = "nickfolessuperbowlmvp";
 /* GET home page. */
-router.get('/', (req, res) => {
-  knex('income')
-    .then(function(income) {
-      res.json(income);
-    });
-});
+
 
 router.post('/login', (req,res)=>{
   knex('users').where('username', req.body.email).then((user)=>{
@@ -31,18 +26,33 @@ router.use(jwtAuth)
 
 router.post('/ping', (req, res)=>{
   // req.decoded.id === session////////////////////////////******************
-  console.log(req.decoded);
+  //console.log('token',req.decoded);
   res.json('pong')
 })
 
+router.get('/income', (req, res) => {
+
+   console.log('id is',req.decoded.id);
+   knex('income')
+   .where('users_id',req.decoded.id)
+   .then(function(income) {
+     console.log(income);
+     res.json(income);
+   });
+
+});
 
 
 
 
+
+
+
+////////////////////////////////////////////////////////////////////////////
 function jwtAuth(req, res, next){
  //send as a query parameter!
- var token = req.body.token || req.query.token || req.headers['x-access-token'];
-
+ var token = req.body.token || req.query.token || req.headers['x-access-token']|| req.params.token;
+ console.log(token);
  // decode token
  if (token) {
 
@@ -53,7 +63,7 @@ function jwtAuth(req, res, next){
      } else {
        // if everything is good, save to request for use in other routes
        req.decoded = decoded;
-       console.log(req.decoded);
+       console.log("request decoded" + req.decoded);
        next();
      }
    });
