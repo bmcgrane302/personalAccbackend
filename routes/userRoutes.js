@@ -36,7 +36,7 @@ router.get('/income', (req, res) => {
    knex('income')
    .where('users_id',req.decoded.id)
    .then(function(income) {
-     console.log(income);
+     //console.log(income);
      res.json(income);
    });
 
@@ -44,15 +44,33 @@ router.get('/income', (req, res) => {
 
 router.get('/expenses', (req, res) => {
 
-   console.log('id is',req.decoded.id);
+   //console.log('id is',req.decoded.id);
    knex('expenses')
    .where('users_id',req.decoded.id)
    .then(function(expenses) {
-     console.log(expenses);
+     //console.log(expenses);
      res.json(expenses);
    });
 
 });
+
+router.post('/addincome', (req, res) => {
+  knex('income')
+
+    .insert({
+      income_description:req.body.newIncome.income_description,
+      income_budget:req.body.newIncome.income_budget
+    })
+    .then(() => {
+      console.log('income',req.body);
+      knex('income')
+        .select()
+        .then((income) => {
+          console.log(income);
+          res.json(income)
+        })
+    })
+})
 
 
 
