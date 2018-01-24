@@ -46,7 +46,7 @@ router.get('/expenses', (req, res) => {
 
    //console.log('id is',req.decoded.id);
    knex('expenses')
-   .where('users_id for income',req.decoded.id)
+   .where('users_id',req.decoded.id)
    .then(function(expenses) {
      //console.log(expenses);
      res.json(expenses);
