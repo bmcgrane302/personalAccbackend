@@ -62,14 +62,19 @@ router.post('/addincome', (req, res) => {
       income_budget:req.body.newIncome.income_budget,
       users_id:req.decoded.id
     })
-    .then(() => {
-      //console.log('income',req.body);
-      knex('income')
-        .select()
-        .then((income) => {
-          console.log(income);
-          res.json(income)
-        })
+    .returning('*')
+    .then(income => {
+      res.send(income)
+
+
+    // .then(() => {
+    //   //console.log('income',req.body);
+    //   knex('income')
+    //     .select()
+    //     .then((income) => {
+    //       console.log(income);
+    //       res.json(income)
+    //     })
     })
 })
 
