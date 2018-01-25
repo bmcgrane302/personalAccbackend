@@ -73,6 +73,25 @@ router.post('/addincome', (req, res) => {
     })
 })
 
+router.post('/addexpense', (req, res) => {
+  console.log('id is',req.decoded.id);
+  knex('expenses')
+    .insert({
+      expense_description:req.body.newExpense.expense_description,
+      expense_budget:req.body.newExpense.expense_budget,
+      users_id:req.decoded.id
+    })
+    .then(() => {
+      console.log('expenses',req.body);
+      knex('expenses')
+        .select()
+        .then((expenses) => {
+          console.log(expenses);
+          res.json(expenses)
+        })
+    })
+})
+
 
 
 
