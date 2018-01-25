@@ -81,14 +81,16 @@ router.post('/addexpense', (req, res) => {
       expense_budget:req.body.newExpense.expense_budget,
       users_id:req.decoded.id
     })
-    .then(() => {
-      //console.log('expenses',req.body);
-      knex('expenses')
-        .select()
-        .then((expenses) => {
-          console.log(expenses);
-          res.json(expenses)
-        })
+    .returning('*')
+    .then(expense => {
+      res.send(expense)
+      // console.log('expenses',req.body);
+      // knex('expenses')
+      //   .select()
+      //   .then((expenses) => {
+      //     console.log(expenses);
+      //     res.json(expenses)
+      //   })
     })
 })
 
@@ -101,6 +103,19 @@ router.patch('/updateexpense/:id', (req, res) => {
         knex('expenses')
           .select()
           .then(expenses => res.json(expenses))
+      }
+    )
+})
+
+router.patch('/updateincome/:id', (req, res) => {
+  console.log("req.body.newIncome", req.body )
+  knex('income')
+    .update({income_amount_received: req.body.updateIncome})
+    .where('id', req.body.id)
+    .then(() => {
+        knex('income')
+          .select()
+          .then(income => res.json(income))
       }
     )
 })
