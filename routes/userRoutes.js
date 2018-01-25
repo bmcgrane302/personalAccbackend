@@ -32,7 +32,7 @@ router.post('/ping', (req, res)=>{
 
 router.get('/income', (req, res) => {
 
-   console.log('id is',req.decoded.id);
+   //console.log('id is',req.decoded.id);
    knex('income')
    .where('users_id',req.decoded.id)
    .then(function(income) {
@@ -48,14 +48,14 @@ router.get('/expenses', (req, res) => {
    knex('expenses')
    .where('users_id',req.decoded.id)
    .then(function(expenses) {
-     //console.log(expenses);
+     //console.log('expenses', expenses);
      res.json(expenses);
    });
 
 });
 
 router.post('/addincome', (req, res) => {
-  console.log('id is',req.decoded.id);
+  //console.log('id is',req.decoded.id);
   knex('income')
     .insert({
       income_description:req.body.newIncome.income_description,
@@ -63,7 +63,7 @@ router.post('/addincome', (req, res) => {
       users_id:req.decoded.id
     })
     .then(() => {
-      console.log('income',req.body);
+      //console.log('income',req.body);
       knex('income')
         .select()
         .then((income) => {
@@ -74,7 +74,7 @@ router.post('/addincome', (req, res) => {
 })
 
 router.post('/addexpense', (req, res) => {
-  console.log('id is',req.decoded.id);
+  //console.log('id is',req.decoded.id);
   knex('expenses')
     .insert({
       expense_description:req.body.newExpense.expense_description,
@@ -82,7 +82,7 @@ router.post('/addexpense', (req, res) => {
       users_id:req.decoded.id
     })
     .then(() => {
-      console.log('expenses',req.body);
+      //console.log('expenses',req.body);
       knex('expenses')
         .select()
         .then((expenses) => {
@@ -90,6 +90,19 @@ router.post('/addexpense', (req, res) => {
           res.json(expenses)
         })
     })
+})
+
+router.patch('/updateexpense/:id', (req, res) => {
+  console.log("req.body.newExpense", req.body )
+  knex('expenses')
+    .update({expense_amount_paid: req.body.updateExpense})
+    .where('id', req.body.id)
+    .then(() => {
+        knex('expenses')
+          .select()
+          .then(expenses => res.json(expenses))
+      }
+    )
 })
 
 
