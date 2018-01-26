@@ -100,7 +100,7 @@ router.post('/addexpense', (req, res) => {
 })
 
 router.patch('/updateexpense/:id', (req, res) => {
-  console.log("req.body.newExpense", req.body )
+  //console.log("req.body.newExpense", req.body )
   knex('expenses')
     .update({expense_amount_paid: req.body.updateExpense})
     .where('id', req.body.id)
@@ -114,7 +114,7 @@ router.patch('/updateexpense/:id', (req, res) => {
 })
 
 router.patch('/updateincome/:id', (req, res) => {
-  console.log("req.body.newIncome",  req.decoded.id )
+  //console.log("req.body.id",  req.decoded.id )
   knex('income')
     .update({income_amount_received: req.body.updateIncome})
     .where('id', req.body.id)
@@ -127,7 +127,18 @@ router.patch('/updateincome/:id', (req, res) => {
     )
 })
 
-
+router.delete('/deleteincome/:id', (req, res) => {
+  console.log("delete income", req.body)
+  knex('income')
+    .del()
+    .where('id', req.params.id)
+    .then(() => {
+      knex('income')
+        .where('users_id', req.decoded.id)
+        .select()
+        .then(income => res.json(income))
+    })
+})
 
 
 
