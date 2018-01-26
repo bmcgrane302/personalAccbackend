@@ -106,6 +106,7 @@ router.patch('/updateexpense/:id', (req, res) => {
     .where('id', req.body.id)
     .then(() => {
         knex('expenses')
+          .where('users_id', req.decoded.id)
           .select()
           .then(expenses => res.json(expenses))
       }
@@ -113,12 +114,13 @@ router.patch('/updateexpense/:id', (req, res) => {
 })
 
 router.patch('/updateincome/:id', (req, res) => {
-  console.log("req.body.newIncome", req.body )
+  console.log("req.body.newIncome",  req.decoded.id )
   knex('income')
     .update({income_amount_received: req.body.updateIncome})
     .where('id', req.body.id)
     .then(() => {
         knex('income')
+          .where('users_id', req.decoded.id)
           .select()
           .then(income => res.json(income))
       }
