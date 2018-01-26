@@ -128,7 +128,7 @@ router.patch('/updateincome/:id', (req, res) => {
 })
 
 router.delete('/deleteincome/:id', (req, res) => {
-  console.log("delete income", req.body)
+  console.log("delete income", req.params)
   knex('income')
     .del()
     .where('id', req.params.id)
@@ -148,7 +148,7 @@ router.delete('/deleteincome/:id', (req, res) => {
 function jwtAuth(req, res, next){
  //send as a query parameter!
  var token = req.body.token || req.query.token || req.headers['x-access-token']|| req.params.token;
- console.log(token);
+ console.log("token is" + token);
  // decode token
  if (token) {
 
