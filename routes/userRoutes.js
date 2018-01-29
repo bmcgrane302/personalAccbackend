@@ -140,6 +140,19 @@ router.delete('/deleteincome/:id', (req, res) => {
     })
 })
 
+router.delete('/deleteexpense/:id', (req, res) => {
+  console.log("delete expense", req.params)
+  knex('expenses')
+    .del()
+    .where('id', req.params.id)
+    .then(() => {
+      knex('expenses')
+        .where('users_id', req.decoded.id)
+        .select()
+        .then(expenses => res.json(expenses))
+    })
+})
+
 
 
 
