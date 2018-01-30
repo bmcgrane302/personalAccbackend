@@ -85,6 +85,7 @@ router.post('/addexpense', (req, res) => {
     .insert({
       expense_description:req.body.newExpense.expense_description,
       expense_budget:req.body.newExpense.expense_budget,
+      expense_amount_paid:req.body.newExpense.expense_amount_paid,
       users_id:req.decoded.id
     })
     .returning('*')
