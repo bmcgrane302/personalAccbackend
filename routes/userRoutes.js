@@ -22,6 +22,25 @@ router.post('/login', (req,res)=>{
   })
 });
 
+router.post('/adduser', (req, res) => {
+  console.log('user',req.body);
+  knex('users')
+    .insert({
+      username:req.body.addUser.username,
+      password:req.body.addUser.password
+    })
+
+    .then(() => {
+      knex('users')
+        .select()
+        .then((users) => {
+          console.log(users);
+          res.json(users)
+        })
+    })
+})
+
+
 router.use(jwtAuth)
 
 router.post('/ping', (req, res)=>{
