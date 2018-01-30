@@ -60,6 +60,7 @@ router.post('/addincome', (req, res) => {
     .insert({
       income_description:req.body.newIncome.income_description,
       income_budget:req.body.newIncome.income_budget,
+      income_amount_received:req.body.newIncome.income_amount_received,
       users_id:req.decoded.id
     })
     .returning('*')
