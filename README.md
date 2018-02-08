@@ -46,3 +46,13 @@ Repository. If you would like to *implement* a new feature, please submit an iss
 ## License
 MIT
 # personalAccbackend
+
+
+
+## Technology   
+  * Node JS
+  * Knex
+  * PosgreSQL
+
+
+## PERSONAL ACCOUNTANT IS A MOBILE BUDGETING APPLICATION THAT ALLOWS USERS TO HAVE REALTIME ACCESS TO THEIR INCOME AND EXPENDITURES.
